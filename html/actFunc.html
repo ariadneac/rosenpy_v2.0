@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>actFunc module &mdash; RosenPy 2.0 documentation</title>
+      <link rel="stylesheet" href="static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="static/css/theme.css" type="text/css" />
+    <link rel="shortcut icon" href="static/ico_rosenpy.ico"/>
+  <!--[if lt IE 9]>
+    <script src="static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="static/jquery.js"></script>
+        <script src="static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="./" id="documentation_options" src="static/documentation_options.js"></script>
+        <script src="static/doctools.js"></script>
+        <script src="static/sphinx_highlight.js"></script>
+    <script src="static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="batchGenFunc module" href="batchGenFunc.html" />
+    <link rel="prev" title="rputils" href="rputils.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #343131" >
+
+          
+          
+          <a href="index.html">
+            
+              <img src="static/logo_rosenpy.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="welcome.html">Welcome to RosenPy’s documentation!</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">RosenPy Package</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="rosenpymodel.html">rosenpymodel</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="rputils.html">rputils</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">actFunc module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#actFunc.acos"><code class="docutils literal notranslate"><span class="pre">acos()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#actFunc.asin"><code class="docutils literal notranslate"><span class="pre">asin()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#actFunc.asinh"><code class="docutils literal notranslate"><span class="pre">asinh()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#actFunc.atan"><code class="docutils literal notranslate"><span class="pre">atan()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#actFunc.atanh"><code class="docutils literal notranslate"><span class="pre">atanh()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#actFunc.linear"><code class="docutils literal notranslate"><span class="pre">linear()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#actFunc.sech"><code class="docutils literal notranslate"><span class="pre">sech()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#actFunc.sin"><code class="docutils literal notranslate"><span class="pre">sin()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#actFunc.sinh"><code class="docutils literal notranslate"><span class="pre">sinh()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#actFunc.splitComplex"><code class="docutils literal notranslate"><span class="pre">splitComplex()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#actFunc.tan"><code class="docutils literal notranslate"><span class="pre">tan()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#actFunc.tanh"><code class="docutils literal notranslate"><span class="pre">tanh()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="batchGenFunc.html">batchGenFunc module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="costFunc.html">costFunc module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="decayFunc.html">decayFunc module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gpu.html">gpu module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="initFunc.html">initFunc module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="regFunc.html">regFunc module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="utils.html">utils module</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #343131" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">RosenPy</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">RosenPy Package</a></li>
+          <li class="breadcrumb-item"><a href="rputils.html">rputils</a></li>
+      <li class="breadcrumb-item active">actFunc module</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/actFunc.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-actFunc">
+<span id="actfunc-module"></span><h1>actFunc module<a class="headerlink" href="#module-actFunc" title="Permalink to this heading"></a></h1>
+<p><strong>RosenPy: An Open Source Python Framework for Complex-Valued Neural Networks</strong>.
+<em>Copyright © A. A. Cruz, K. S. Mayer, D. S. Arantes</em>.</p>
+<p><em>License</em></p>
+<p>This file is part of RosenPy.
+RosenPy is an open source framework distributed under the terms of the GNU General
+Public License, as published by the Free Software Foundation, either version 3 of
+the License, or (at your option) any later version. For additional information on
+license terms, please open the Readme.md file.</p>
+<p>RosenPy is distributed in the hope that it will be useful to every user, but
+WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+See the GNU General Public License for more details.</p>
+<p>You should have received a copy of the GNU General Public License
+along with RosenPy.  If not, see &lt;<a class="reference external" href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>&gt;.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="actFunc.acos">
+<span class="sig-prename descclassname"><span class="pre">actFunc.</span></span><span class="sig-name descname"><span class="pre">acos</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">module</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">derivative</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="module/actFunc.html#acos"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#actFunc.acos" title="Permalink to this definition"></a></dt>
+<dd><p>Activation function - arc cosine, element-wise.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>xp</strong> (<em>str</em>) – CuPy/Numpy module. This parameter is set at the time of
+initialization of the NeuralNetwork class.</p></li>
+<li><p><strong>x</strong> (<em>array_like</em>) – Input array.</p></li>
+<li><p><strong>derivative</strong> (<em>bool</em><em>, </em><em>optional</em>) – The default is False.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>It defines whether what will be returned will be the activation
+function (feedforward) or its derivative (backpropagation).</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>array_like</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="actFunc.asin">
+<span class="sig-prename descclassname"><span class="pre">actFunc.</span></span><span class="sig-name descname"><span class="pre">asin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">module</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">derivative</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="module/actFunc.html#asin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#actFunc.asin" title="Permalink to this definition"></a></dt>
+<dd><p>Activation function - arc sine, element-wise.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>xp</strong> (<em>str</em>) – CuPy/Numpy module. This parameter is set at the time of
+initialization of the NeuralNetwork class.</p></li>
+<li><p><strong>x</strong> (<em>array_like</em>) – Input array.</p></li>
+<li><p><strong>derivative</strong> (<em>bool</em><em>, </em><em>optional</em>) – The default is False.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>It defines whether what will be returned will be the activation
+function (feedforward) or its derivative (backpropagation).</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>array_like</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="actFunc.asinh">
+<span class="sig-prename descclassname"><span class="pre">actFunc.</span></span><span class="sig-name descname"><span class="pre">asinh</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">module</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">derivative</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="module/actFunc.html#asinh"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#actFunc.asinh" title="Permalink to this definition"></a></dt>
+<dd><p>Activation function - inverse hyperbolic sine , element-wise.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>xp</strong> (<em>str</em>) – CuPy/Numpy module. This parameter is set at the time of
+initialization of the NeuralNetwork class.</p></li>
+<li><p><strong>x</strong> (<em>array_like</em>) – Input array.</p></li>
+<li><p><strong>derivative</strong> (<em>bool</em><em>, </em><em>optional</em>) – The default is False.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>It defines whether what will be returned will be the activation
+function (feedforward) or its derivative (backpropagation).</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>array_like</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="actFunc.atan">
+<span class="sig-prename descclassname"><span class="pre">actFunc.</span></span><span class="sig-name descname"><span class="pre">atan</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">module</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">derivative</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="module/actFunc.html#atan"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#actFunc.atan" title="Permalink to this definition"></a></dt>
+<dd><p>Activation function - arc tangent, element-wise.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>xp</strong> (<em>str</em>) – CuPy/Numpy module. This parameter is set at the time of
+initialization of the NeuralNetwork class.</p></li>
+<li><p><strong>x</strong> (<em>array_like</em>) – Input array.</p></li>
+<li><p><strong>derivative</strong> (<em>bool</em><em>, </em><em>optional</em>) – The default is False.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>It defines whether what will be returned will be the activation
+function (feedforward) or its derivative (backpropagation).</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>array_like</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="actFunc.atanh">
+<span class="sig-prename descclassname"><span class="pre">actFunc.</span></span><span class="sig-name descname"><span class="pre">atanh</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">module</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">derivative</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="module/actFunc.html#atanh"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#actFunc.atanh" title="Permalink to this definition"></a></dt>
+<dd><p>Activation function - the inverse hyperbolic tangent , element-wise.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>xp</strong> (<em>str</em>) – CuPy/Numpy module. This parameter is set at the time of
+initialization of the NeuralNetwork class.</p></li>
+<li><p><strong>x</strong> (<em>array_like</em>) – Input array.</p></li>
+<li><p><strong>derivative</strong> (<em>bool</em><em>, </em><em>optional</em>) – The default is False.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>It defines whether what will be returned will be the activation
+function (feedforward) or its derivative (backpropagation).</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>array_like</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="actFunc.linear">
+<span class="sig-prename descclassname"><span class="pre">actFunc.</span></span><span class="sig-name descname"><span class="pre">linear</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">module</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">derivative</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="module/actFunc.html#linear"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#actFunc.linear" title="Permalink to this definition"></a></dt>
+<dd><p>The linear activation function, also known as “no activation,” or
+“identity function” (multiplied x1.0)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>xp</strong> (<em>str</em>) – CuPy/Numpy module. This parameter is set at the time of
+initialization of the NeuralNetwork class.</p></li>
+<li><p><strong>x</strong> (<em>array_like</em>) – Input array.</p></li>
+<li><p><strong>derivative</strong> (<em>bool</em><em>, </em><em>optional</em>) – The default is False.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>It defines whether what will be returned will be the activation
+function (feedforward) or its derivative (backpropagation).</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>array_like</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="actFunc.sech">
+<span class="sig-prename descclassname"><span class="pre">actFunc.</span></span><span class="sig-name descname"><span class="pre">sech</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">module</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">derivative</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="module/actFunc.html#sech"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#actFunc.sech" title="Permalink to this definition"></a></dt>
+<dd><p>Activation function - the hyperbolic secant, element-wise.
+This is the FCRBFNN activation function.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>xp</strong> (<em>str</em>) – CuPy/Numpy module. This parameter is set at the time of
+initialization of the NeuralNetwork class.</p></li>
+<li><p><strong>x</strong> (<em>array_like</em>) – Input array.</p></li>
+<li><p><strong>derivative</strong> (<em>bool</em><em>, </em><em>optional</em>) – The default is False.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>It defines whether what will be returned will be the activation
+function (feedforward) or its derivative (backpropagation).</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>array_like</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="actFunc.sin">
+<span class="sig-prename descclassname"><span class="pre">actFunc.</span></span><span class="sig-name descname"><span class="pre">sin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">module</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">derivative</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="module/actFunc.html#sin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#actFunc.sin" title="Permalink to this definition"></a></dt>
+<dd><p>Activation function - sine, element-wise.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>xp</strong> (<em>str</em>) – CuPy/Numpy module. This parameter is set at the time of
+initialization of the NeuralNetwork class.</p></li>
+<li><p><strong>x</strong> (<em>array_like</em>) – Input array.</p></li>
+<li><p><strong>derivative</strong> (<em>bool</em><em>, </em><em>optional</em>) – The default is False.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>It defines whether what will be returned will be the activation
+function (feedforward) or its derivative (backpropagation).</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>array_like</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="actFunc.sinh">
+<span class="sig-prename descclassname"><span class="pre">actFunc.</span></span><span class="sig-name descname"><span class="pre">sinh</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">module</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">derivative</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="module/actFunc.html#sinh"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#actFunc.sinh" title="Permalink to this definition"></a></dt>
+<dd><p>Activation function - Hyperbolic sine, element-wise.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>xp</strong> (<em>str</em>) – CuPy/Numpy module. This parameter is set at the time of
+initialization of the NeuralNetwork class.</p></li>
+<li><p><strong>x</strong> (<em>array_like</em>) – Input array.</p></li>
+<li><p><strong>derivative</strong> (<em>bool</em><em>, </em><em>optional</em>) – The default is False.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>It defines whether what will be returned will be the activation
+function (feedforward) or its derivative (backpropagation).</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>array_like</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="actFunc.splitComplex">
+<span class="sig-prename descclassname"><span class="pre">actFunc.</span></span><span class="sig-name descname"><span class="pre">splitComplex</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">module</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">act</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">derivative</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="module/actFunc.html#splitComplex"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#actFunc.splitComplex" title="Permalink to this definition"></a></dt>
+<dd><p>This function is used in SCFFNN, since he activation functions that are separately
+applied to the real and imaginary components of the linear combination of
+each layer.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>xp</strong> (<em>str</em>) – CuPy/Numpy module. This parameter is set at the time of
+initialization of the NeuralNetwork class.</p></li>
+<li><p><strong>y</strong> (<em>array_like</em>) – Input array.</p></li>
+<li><p><strong>act</strong> (<em>str</em>) – Name of the activation function that will be used in the SCFFNN classes, as string.</p></li>
+<li><p><strong>derivative</strong> (<em>TYPE</em><em>, </em><em>optional</em>) – The default is False.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>It defines whether what will be returned will be the activation
+function (feedforward) or its derivative (backpropagation).</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>array_like</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="actFunc.tan">
+<span class="sig-prename descclassname"><span class="pre">actFunc.</span></span><span class="sig-name descname"><span class="pre">tan</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">module</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">derivative</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="module/actFunc.html#tan"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#actFunc.tan" title="Permalink to this definition"></a></dt>
+<dd><p>Activation function - tangent , element-wise.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>xp</strong> (<em>str</em>) – CuPy/Numpy module. This parameter is set at the time of
+initialization of the NeuralNetwork class.</p></li>
+<li><p><strong>x</strong> (<em>array_like</em>) – Input array.</p></li>
+<li><p><strong>derivative</strong> (<em>bool</em><em>, </em><em>optional</em>) – The default is False.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>It defines whether what will be returned will be the activation
+function (feedforward) or its derivative (backpropagation).</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>array_like</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="actFunc.tanh">
+<span class="sig-prename descclassname"><span class="pre">actFunc.</span></span><span class="sig-name descname"><span class="pre">tanh</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">module</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">derivative</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="module/actFunc.html#tanh"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#actFunc.tanh" title="Permalink to this definition"></a></dt>
+<dd><p>Activation function - Hyperbolic tangent, element-wise.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>xp</strong> (<em>str</em>) – CuPy/Numpy module. This parameter is set at the time of
+initialization of the NeuralNetwork class.</p></li>
+<li><p><strong>x</strong> (<em>array_like</em>) – Input array.</p></li>
+<li><p><strong>derivative</strong> (<em>bool</em><em>, </em><em>optional</em>) – The default is False.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>It defines whether what will be returned will be the activation
+function (feedforward) or its derivative (backpropagation).</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>array_like</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="rputils.html" class="btn btn-neutral float-left" title="rputils" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="batchGenFunc.html" class="btn btn-neutral float-right" title="batchGenFunc module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Ariadne A. Cruz, Kayol S. Mayer, Dalton S. Arantes.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

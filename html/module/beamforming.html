@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>beamforming &mdash; RosenPy 2.0 documentation</title>
+      <link rel="stylesheet" href="../static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../static/css/theme.css" type="text/css" />
+    <link rel="shortcut icon" href="../static/ico_rosenpy.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../static/jquery.js"></script>
+        <script src="../static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../static/documentation_options.js"></script>
+        <script src="../static/doctools.js"></script>
+        <script src="../static/sphinx_highlight.js"></script>
+    <script src="../static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #343131" >
+
+          
+          
+          <a href="../index.html">
+            
+              <img src="../static/logo_rosenpy.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../welcome.html">Welcome to RosenPy’s documentation!</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../modules.html">RosenPy Package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #343131" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">RosenPy</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Module code</a></li>
+      <li class="breadcrumb-item active">beamforming</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for beamforming</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="sd">&quot;&quot;&quot;**RosenPy: An Open Source Python Framework for Complex-Valued Neural Networks**.</span>
+<span class="sd">*Copyright © A. A. Cruz, K. S. Mayer, D. S. Arantes*.</span>
+
+<span class="sd">*License*</span>
+
+<span class="sd">This file is part of RosenPy.</span>
+<span class="sd">RosenPy is an open source framework distributed under the terms of the GNU General </span>
+<span class="sd">Public License, as published by the Free Software Foundation, either version 3 of </span>
+<span class="sd">the License, or (at your option) any later version. For additional information on </span>
+<span class="sd">license terms, please open the Readme.md file.</span>
+
+<span class="sd">RosenPy is distributed in the hope that it will be useful to every user, but</span>
+<span class="sd">WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="sd">MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. </span>
+<span class="sd">See the GNU General Public License for more details. </span>
+
+<span class="sd">You should have received a copy of the GNU General Public License</span>
+<span class="sd">along with RosenPy.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<div class="viewcode-block" id="create_dataset_beam"><a class="viewcode-back" href="../beamforming.html#beamforming.create_dataset_beam">[docs]</a><span class="k">def</span> <span class="nf">create_dataset_beam</span><span class="p">(</span><span class="n">modulation</span><span class="p">,</span> <span class="n">Mmod</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">phi</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">desired</span><span class="p">,</span> <span class="n">lenData</span><span class="p">,</span> <span class="n">SINRdB</span><span class="p">,</span> <span class="n">SNRdBs</span><span class="p">,</span> <span class="n">SNRdBi</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Create a dataset for beamforming.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        modulation (list): List of modulation types.</span>
+<span class="sd">        Mmod (list): List of modulation orders.</span>
+<span class="sd">        f (float): Frequency of the signal.</span>
+<span class="sd">        phi (float): Angle in degrees for the transmitter.</span>
+<span class="sd">        theta (float): Angle in degrees for the elevation.</span>
+<span class="sd">        desired (array): Array indicating if each output is desired or not.</span>
+<span class="sd">        lenData (int): Length of the dataset.</span>
+<span class="sd">        SINRdB (float): Signal-to-Interference-plus-Noise Ratio in dB.</span>
+<span class="sd">        SNRdBs (float): Signal-to-Noise Ratio in dB for sources.</span>
+<span class="sd">        SNRdBi (float): Signal-to-Noise Ratio in dB for interferences.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        tuple: Tuple containing the input and output datasets.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Linear SNR of sources</span>
+    <span class="n">SNRs</span> <span class="o">=</span> <span class="mi">10</span><span class="o">**</span><span class="p">(</span><span class="n">SNRdBs</span><span class="o">/</span><span class="mi">10</span><span class="p">)</span>
+    <span class="c1"># Linear SNR of interferences</span>
+    <span class="n">SNRi</span> <span class="o">=</span> <span class="mi">10</span><span class="o">**</span><span class="p">(</span><span class="n">SNRdBi</span><span class="o">/</span><span class="mi">10</span><span class="p">)</span>
+    <span class="c1"># Linear SINR</span>
+    <span class="n">SINR</span> <span class="o">=</span> <span class="mi">10</span><span class="o">**</span><span class="p">(</span><span class="n">SINRdB</span><span class="o">/</span><span class="mi">10</span><span class="p">)</span>
+
+    <span class="c1"># Number of sources</span>
+    <span class="n">Ns</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">desired</span><span class="p">)</span>
+    <span class="c1"># Number of interferences</span>
+    <span class="n">Ni</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">desired</span><span class="p">)</span> <span class="o">-</span> <span class="n">Ns</span>
+
+    <span class="c1"># Normalization factor to the desired SINR</span>
+    <span class="n">iota</span> <span class="o">=</span> <span class="p">(</span><span class="n">Ni</span><span class="o">/</span><span class="n">Ns</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="n">SNRi</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="n">SINR</span> <span class="o">-</span> <span class="mi">1</span><span class="o">/</span><span class="n">SNRs</span><span class="p">)</span>
+
+    <span class="c1"># Standard deviations for AWGN noises of sources and interferences</span>
+    <span class="n">StdDevS</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">((</span><span class="mi">1</span><span class="o">/</span><span class="n">SNRs</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">StdDevI</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">((</span><span class="mi">1</span><span class="o">/</span><span class="p">(</span><span class="n">iota</span><span class="o">*</span><span class="n">SNRi</span><span class="p">))</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
+
+    <span class="c1"># Create StdDevVect for each modulation type</span>
+    <span class="c1">#StdDevVect = np.zeros((len(modulation), lenData), dtype=complex)</span>
+
+    <span class="n">StdDevVect</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">desired</span> <span class="o">==</span> <span class="mi">1</span><span class="p">,</span> <span class="n">StdDevS</span><span class="p">,</span> <span class="n">StdDevI</span><span class="p">)])</span><span class="o">.</span><span class="n">T</span>
+
+
+    <span class="c1"># Speed of light in vacuum [m/s]</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="mi">299792458</span>
+    <span class="c1"># Wavelength</span>
+    <span class="n">lambda_val</span> <span class="o">=</span> <span class="n">c</span> <span class="o">/</span> <span class="n">f</span>
+    <span class="c1"># Propagation constant</span>
+    <span class="n">beta</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="n">lambda_val</span>
+    <span class="c1"># Dipoles length</span>
+    <span class="n">L</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">lambda_val</span>
+    <span class="c1"># Dipoles spacing</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="mf">0.25</span> <span class="o">*</span> <span class="n">lambda_val</span>
+    <span class="c1"># Dipoles coordinates</span>
+    <span class="n">coord</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
+        <span class="p">[</span><span class="n">s</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+        <span class="p">[</span><span class="n">s</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">deg2rad</span><span class="p">(</span><span class="mi">60</span><span class="p">)),</span> <span class="n">s</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">deg2rad</span><span class="p">(</span><span class="mi">60</span><span class="p">)),</span> <span class="mi">0</span><span class="p">],</span>
+        <span class="p">[</span><span class="o">-</span><span class="n">s</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">deg2rad</span><span class="p">(</span><span class="mi">60</span><span class="p">)),</span> <span class="n">s</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">deg2rad</span><span class="p">(</span><span class="mi">60</span><span class="p">)),</span> <span class="mi">0</span><span class="p">],</span>
+        <span class="p">[</span><span class="o">-</span><span class="n">s</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+        <span class="p">[</span><span class="o">-</span><span class="n">s</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">deg2rad</span><span class="p">(</span><span class="mi">60</span><span class="p">)),</span> <span class="o">-</span><span class="n">s</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">deg2rad</span><span class="p">(</span><span class="mi">60</span><span class="p">)),</span> <span class="mi">0</span><span class="p">],</span>
+        <span class="p">[</span><span class="n">s</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">deg2rad</span><span class="p">(</span><span class="mi">60</span><span class="p">)),</span> <span class="o">-</span><span class="n">s</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">deg2rad</span><span class="p">(</span><span class="mi">60</span><span class="p">)),</span> <span class="mi">0</span><span class="p">]</span>
+    <span class="p">])</span><span class="o">.</span><span class="n">T</span>
+
+    <span class="c1"># Matrix of self and mutual impedances</span>
+    <span class="n">Z</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
+        <span class="p">[</span><span class="mf">78.424</span><span class="o">+</span><span class="mf">45.545</span><span class="n">j</span><span class="p">,</span> <span class="mf">46.9401</span><span class="o">-</span><span class="mf">32.6392</span><span class="n">j</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.791</span><span class="o">-</span><span class="mf">41.3825</span><span class="n">j</span><span class="p">,</span> <span class="o">-</span><span class="mf">14.4422</span><span class="o">-</span><span class="mf">34.4374</span><span class="n">j</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.791</span><span class="o">-</span><span class="mf">41.3825</span><span class="n">j</span><span class="p">,</span> <span class="mf">46.9401</span><span class="o">-</span><span class="mf">32.6392</span><span class="n">j</span><span class="p">],</span>
+        <span class="p">[</span><span class="mf">46.9401</span><span class="o">-</span><span class="mf">32.6392</span><span class="n">j</span><span class="p">,</span> <span class="mf">78.424</span><span class="o">+</span><span class="mf">45.545</span><span class="n">j</span><span class="p">,</span> <span class="mf">46.9401</span><span class="o">-</span><span class="mf">32.6392</span><span class="n">j</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.791</span><span class="o">-</span><span class="mf">41.3825</span><span class="n">j</span><span class="p">,</span> <span class="o">-</span><span class="mf">14.4422</span><span class="o">-</span><span class="mf">34.4374</span><span class="n">j</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.791</span><span class="o">-</span><span class="mf">41.3825</span><span class="n">j</span><span class="p">],</span>
+        <span class="p">[</span><span class="o">-</span><span class="mf">0.791</span><span class="o">-</span><span class="mf">41.3825</span><span class="n">j</span><span class="p">,</span> <span class="mf">46.9401</span><span class="o">-</span><span class="mf">32.6392</span><span class="n">j</span><span class="p">,</span> <span class="mf">78.424</span><span class="o">+</span><span class="mf">45.545</span><span class="n">j</span><span class="p">,</span> <span class="mf">46.9401</span><span class="o">-</span><span class="mf">32.6392</span><span class="n">j</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.791</span><span class="o">-</span><span class="mf">41.3825</span><span class="n">j</span><span class="p">,</span> <span class="o">-</span><span class="mf">14.4422</span><span class="o">-</span><span class="mf">34.4374</span><span class="n">j</span><span class="p">],</span>
+        <span class="p">[</span><span class="o">-</span><span class="mf">14.4422</span><span class="o">-</span><span class="mf">34.4374</span><span class="n">j</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.791</span><span class="o">-</span><span class="mf">41.3825</span><span class="n">j</span><span class="p">,</span> <span class="mf">46.9401</span><span class="o">-</span><span class="mf">32.6392</span><span class="n">j</span><span class="p">,</span> <span class="mf">78.424</span><span class="o">+</span><span class="mf">45.545</span><span class="n">j</span><span class="p">,</span> <span class="mf">46.9401</span><span class="o">-</span><span class="mf">32.6392</span><span class="n">j</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.791</span><span class="o">-</span><span class="mf">41.3825</span><span class="n">j</span><span class="p">],</span>
+        <span class="p">[</span><span class="o">-</span><span class="mf">0.791</span><span class="o">-</span><span class="mf">41.3825</span><span class="n">j</span><span class="p">,</span> <span class="o">-</span><span class="mf">14.4422</span><span class="o">-</span><span class="mf">34.4374</span><span class="n">j</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.791</span><span class="o">-</span><span class="mf">41.3825</span><span class="n">j</span><span class="p">,</span> <span class="mf">46.9401</span><span class="o">-</span><span class="mf">32.6392</span><span class="n">j</span><span class="p">,</span> <span class="mf">78.424</span><span class="o">+</span><span class="mf">45.545</span><span class="n">j</span><span class="p">,</span> <span class="mf">46.9401</span><span class="o">-</span><span class="mf">32.6392</span><span class="n">j</span><span class="p">],</span>
+        <span class="p">[</span><span class="mf">46.9401</span><span class="o">-</span><span class="mf">32.6392</span><span class="n">j</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.791</span><span class="o">-</span><span class="mf">41.3825</span><span class="n">j</span><span class="p">,</span> <span class="o">-</span><span class="mf">14.4422</span><span class="o">-</span><span class="mf">34.4374</span><span class="n">j</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.791</span><span class="o">-</span><span class="mf">41.3825</span><span class="n">j</span><span class="p">,</span> <span class="mf">46.9401</span><span class="o">-</span><span class="mf">32.6392</span><span class="n">j</span><span class="p">,</span> <span class="mf">78.424</span><span class="o">+</span><span class="mf">45.545</span><span class="n">j</span><span class="p">]</span>
+    <span class="p">])</span>
+
+    <span class="c1"># Load impedance</span>
+    <span class="n">ZT</span> <span class="o">=</span> <span class="mi">50</span>  <span class="c1"># [ohms]</span>
+
+    <span class="c1"># Dipoles self impedance</span>
+    <span class="n">ZA</span> <span class="o">=</span> <span class="n">Z</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+
+    <span class="c1"># Coupling matrix</span>
+    <span class="n">C</span> <span class="o">=</span> <span class="p">(</span><span class="n">ZT</span> <span class="o">+</span> <span class="n">ZA</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">((</span><span class="n">Z</span> <span class="o">+</span> <span class="n">ZT</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">6</span><span class="p">)))</span>
+
+    <span class="c1"># Matrix of relative intensity of Etheta</span>
+    <span class="n">Xm</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">((</span><span class="n">lambda_val</span> <span class="o">/</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">beta</span> <span class="o">*</span> <span class="n">L</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)))</span> <span class="o">*</span> <span class="p">((</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">L</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">deg2rad</span><span class="p">(</span><span class="n">theta</span><span class="p">))</span> <span class="o">/</span> <span class="n">lambda_val</span><span class="p">)</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">L</span> <span class="o">/</span> <span class="n">lambda_val</span><span class="p">))</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">deg2rad</span><span class="p">(</span><span class="n">theta</span><span class="p">))))</span>
+
+    <span class="c1"># Matrix of Tx angular positions</span>
+    <span class="n">Omega</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">deg2rad</span><span class="p">(</span><span class="n">theta</span><span class="p">))</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">deg2rad</span><span class="p">(</span><span class="n">phi</span><span class="p">)),</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">deg2rad</span><span class="p">(</span><span class="n">theta</span><span class="p">))</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">deg2rad</span><span class="p">(</span><span class="n">phi</span><span class="p">)),</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">deg2rad</span><span class="p">(</span><span class="n">theta</span><span class="p">))])</span><span class="o">.</span><span class="n">T</span>
+
+    <span class="n">Pi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="n">j</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">Omega</span><span class="p">,</span> <span class="n">coord</span><span class="p">)</span> <span class="o">/</span> <span class="n">lambda_val</span><span class="p">)</span>
+
+    <span class="c1"># Steering vectors</span>
+    <span class="n">psi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">Pi</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">Xm</span><span class="p">)</span>
+
+    <span class="c1"># Create symbols of sources and interferences</span>
+    <span class="n">SetOut</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">modulation</span><span class="p">),</span> <span class="n">lenData</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">complex</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">ii</span><span class="p">,</span> <span class="n">mod_type</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">modulation</span><span class="p">):</span>
+        <span class="c1"># QAM symbols</span>
+        <span class="k">if</span> <span class="n">mod_type</span> <span class="o">==</span> <span class="s2">&quot;QAM&quot;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">Mmod</span><span class="p">[</span><span class="n">ii</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">SetOut</span><span class="p">[</span><span class="n">ii</span><span class="p">]</span> <span class="o">=</span> <span class="p">(((</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">Mmod</span><span class="p">[</span><span class="n">ii</span><span class="p">]),</span> <span class="n">size</span><span class="o">=</span><span class="n">lenData</span><span class="p">))</span> <span class="o">*</span> <span class="mi">2</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">Mmod</span><span class="p">[</span><span class="n">ii</span><span class="p">])</span> <span class="o">-</span> <span class="mi">1</span><span class="p">))</span> <span class="o">+</span> \
+                            <span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="p">(((</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">Mmod</span><span class="p">[</span><span class="n">ii</span><span class="p">]),</span> <span class="n">size</span><span class="o">=</span><span class="n">lenData</span><span class="p">)</span> <span class="p">)</span> <span class="o">*</span> <span class="mi">2</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">Mmod</span><span class="p">[</span><span class="n">ii</span><span class="p">])</span> <span class="o">-</span> <span class="mi">1</span><span class="p">))</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">SetOut</span><span class="p">[</span><span class="n">ii</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">lenData</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">lenData</span><span class="p">)</span>
+        <span class="c1"># PSK symbols</span>
+        <span class="k">elif</span> <span class="n">mod_type</span> <span class="o">==</span> <span class="s2">&quot;PSK&quot;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">Mmod</span><span class="p">[</span><span class="n">ii</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">pskAng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="n">Mmod</span><span class="p">[</span><span class="n">ii</span><span class="p">],</span> <span class="n">size</span><span class="o">=</span><span class="n">lenData</span><span class="p">)</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="n">Mmod</span><span class="p">[</span><span class="n">ii</span><span class="p">]</span>
+                <span class="n">SetOut</span><span class="p">[</span><span class="n">ii</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">pskAng</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">pskAng</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">SetOut</span><span class="p">[</span><span class="n">ii</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">lenData</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">lenData</span><span class="p">)</span>
+        <span class="c1"># WGN noise</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">SetOut</span><span class="p">[</span><span class="n">ii</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">lenData</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">lenData</span><span class="p">)</span>
+
+    <span class="c1"># Compute the source and interference powers for normalization</span>
+    <span class="n">P</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">((</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">SetOut</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">SetOut</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">])</span><span class="o">**</span><span class="mi">2</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="n">lenData</span>
+
+    <span class="c1"># Normalize the powers to 1</span>
+    <span class="n">SetOut</span> <span class="o">=</span> <span class="n">SetOut</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">P</span><span class="p">[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">])</span>
+
+    <span class="c1"># Interference normalizations to the desired SINR</span>
+    <span class="c1">#SetOut[~desired] = SetOut[~desired] / np.sqrt(iota)</span>
+    <span class="n">SetOut</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">desired</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)[</span><span class="mi">0</span><span class="p">],:]</span> <span class="o">=</span> <span class="n">SetOut</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">desired</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)[</span><span class="mi">0</span><span class="p">],:]</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">iota</span><span class="p">)</span>
+    <span class="c1">#SetOut[~desired] = SetOut[~desired] / np.sqrt(iota)</span>
+    
+    <span class="c1"># Create the data that impinged on the beamforming</span>
+    <span class="n">SetIn</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">C</span><span class="p">,</span> <span class="n">psi</span><span class="p">)</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">SetOut</span> <span class="o">+</span> <span class="n">StdDevVect</span> <span class="o">*</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">modulation</span><span class="p">),</span> <span class="n">lenData</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">modulation</span><span class="p">),</span> <span class="n">lenData</span><span class="p">)))</span>
+
+    <span class="c1"># Compute the signal powers in each RX dipole</span>
+    <span class="n">P</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">((</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">SetIn</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">SetIn</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">])</span><span class="o">**</span><span class="mi">2</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="n">lenData</span>
+
+    <span class="c1"># Normalize the signals in each dipole to have a unitary power</span>
+    <span class="n">SetIn</span> <span class="o">=</span> <span class="n">SetIn</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">P</span><span class="p">[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">])</span>
+
+    <span class="c1"># Add nonlinearities</span>
+    <span class="n">SetIn</span> <span class="o">=</span> <span class="n">SetIn</span> <span class="o">-</span> <span class="mf">0.1</span> <span class="o">*</span> <span class="n">SetIn</span><span class="o">**</span><span class="mi">3</span> <span class="o">-</span> <span class="mf">0.05</span> <span class="o">*</span> <span class="n">SetIn</span><span class="o">**</span><span class="mi">5</span>
+
+    <span class="c1"># Select desired outputs</span>
+    <span class="c1">#SetOut = SetOut[desired]</span>
+    <span class="n">indices_true</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">desired</span><span class="p">)</span>
+    <span class="n">SetOut</span> <span class="o">=</span> <span class="n">SetOut</span><span class="p">[</span><span class="n">indices_true</span><span class="p">]</span>
+
+    <span class="k">return</span> <span class="n">SetIn</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">SetOut</span><span class="o">.</span><span class="n">T</span></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Ariadne A. Cruz, Kayol S. Mayer, Dalton S. Arantes.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

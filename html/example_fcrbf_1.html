@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Code Example FCRBFNN &mdash; RosenPy 2.0 documentation</title>
+      <link rel="stylesheet" href="static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="static/css/theme.css" type="text/css" />
+    <link rel="shortcut icon" href="static/ico_rosenpy.ico"/>
+  <!--[if lt IE 9]>
+    <script src="static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="static/jquery.js"></script>
+        <script src="static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="./" id="documentation_options" src="static/documentation_options.js"></script>
+        <script src="static/doctools.js"></script>
+        <script src="static/sphinx_highlight.js"></script>
+    <script src="static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Code Example PTRBFNN" href="example_ptrbf_1.html" />
+    <link rel="prev" title="Code Example CVRBFNN" href="example_cvrbf_1.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #343131" >
+
+          
+          
+          <a href="index.html">
+            
+              <img src="static/logo_rosenpy.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="welcome.html">Welcome to RosenPy’s documentation!</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">RosenPy Package</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="examples.html">Examples</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="dataset.html">dataset</a></li>
+<li class="toctree-l2"><a class="reference internal" href="example_cvffnn_1.html">Code Example CVFFNN</a></li>
+<li class="toctree-l2"><a class="reference internal" href="example_cvrbf_1.html">Code Example CVRBFNN</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Code Example FCRBFNN</a></li>
+<li class="toctree-l2"><a class="reference internal" href="example_ptrbf_1.html">Code Example PTRBFNN</a></li>
+<li class="toctree-l2"><a class="reference internal" href="example_ptrbf_2.html">Code Example PTRBFNN</a></li>
+<li class="toctree-l2"><a class="reference internal" href="example_scffnn_1.html">Code Example SCFFNN</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #343131" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">RosenPy</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="examples.html">Examples</a></li>
+      <li class="breadcrumb-item active">Code Example FCRBFNN</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/example_fcrbf_1.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="code-example-fcrbfnn">
+<h1>Code Example FCRBFNN<a class="headerlink" href="#code-example-fcrbfnn" title="Permalink to this heading"></a></h1>
+<div class="literal-block-wrapper docutils container" id="example-fcrbf-1">
+<div class="code-block-caption"><span class="caption-text">example_fcrbf_1.py</span><a class="headerlink" href="#example-fcrbf-1" title="Permalink to this code"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>    <span class="c1"># Import module from RosenPy</span>
+    <span class="kn">import</span> <span class="nn">rosenpymodel.fcrbfnn</span> <span class="k">as</span> <span class="nn">mynn</span>
+    <span class="kn">import</span> <span class="nn">rputils.utils</span> <span class="k">as</span> <span class="nn">utils</span>
+    <span class="kn">import</span> <span class="nn">rputils.initFunc</span> <span class="k">as</span> <span class="nn">initFunc</span>
+    <span class="kn">import</span> <span class="nn">rputils.decayFunc</span> <span class="k">as</span> <span class="nn">decayFunc</span>
+    <span class="kn">import</span> <span class="nn">rosenpymodel.rpoptimizer</span> <span class="k">as</span> <span class="nn">opt</span>
+    <span class="kn">import</span> <span class="nn">dataset.beamforming</span> <span class="k">as</span> <span class="nn">dt</span>
+    <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+    <span class="k">def</span> <span class="nf">setData</span><span class="p">():</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Set up the data for training.</span>
+
+<span class="sd">            Returns:</span>
+<span class="sd">                    tuple: Tuple containing the normalized input and output datasets.</span>
+<span class="sd">            &quot;&quot;&quot;</span>
+            <span class="n">f</span> <span class="o">=</span> <span class="mf">850e6</span>
+            <span class="n">SINRdB</span> <span class="o">=</span> <span class="mi">20</span>
+            <span class="n">SNRdBs</span> <span class="o">=</span> <span class="mi">25</span>
+            <span class="n">SNRdBi</span> <span class="o">=</span> <span class="mi">20</span>
+            <span class="n">phi</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span> <span class="mi">90</span><span class="p">,</span> <span class="mi">120</span><span class="p">,</span> <span class="mi">160</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">240</span><span class="p">,</span> <span class="mi">260</span><span class="p">,</span> <span class="mi">280</span><span class="p">,</span> <span class="mi">300</span><span class="p">,</span> <span class="mi">330</span><span class="p">]</span>
+            <span class="n">theta</span> <span class="o">=</span> <span class="p">[</span><span class="mi">90</span><span class="p">,</span> <span class="mi">90</span><span class="p">,</span> <span class="mi">90</span><span class="p">,</span> <span class="mi">90</span><span class="p">,</span> <span class="mi">90</span><span class="p">,</span> <span class="mi">90</span><span class="p">,</span> <span class="mi">90</span><span class="p">,</span> <span class="mi">90</span><span class="p">,</span> <span class="mi">90</span><span class="p">,</span> <span class="mi">90</span><span class="p">,</span> <span class="mi">90</span><span class="p">]</span>
+            <span class="n">desired</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+            <span class="n">modulation</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;QAM&quot;</span><span class="p">,</span> <span class="s2">&quot;WGN&quot;</span><span class="p">,</span> <span class="s2">&quot;QAM&quot;</span><span class="p">,</span> <span class="s2">&quot;PSK&quot;</span><span class="p">,</span> <span class="s2">&quot;QAM&quot;</span><span class="p">,</span> <span class="s2">&quot;WGN&quot;</span><span class="p">,</span> <span class="s2">&quot;QAM&quot;</span><span class="p">,</span> <span class="s2">&quot;WGN&quot;</span><span class="p">,</span> <span class="s2">&quot;QAM&quot;</span><span class="p">,</span> <span class="s2">&quot;PSK&quot;</span><span class="p">,</span> <span class="s2">&quot;PSK&quot;</span><span class="p">]</span>
+            <span class="n">Mmod</span> <span class="o">=</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">64</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">256</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">64</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">8</span><span class="p">]</span>
+
+            <span class="n">lenData</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="mf">1e4</span><span class="p">)</span>
+
+            <span class="c1"># Converting &#39;desired&#39; to a NumPy array</span>
+            <span class="n">desired</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">desired</span><span class="p">)</span>
+
+
+            <span class="c1"># Calling the create_dataset_beam function</span>
+            <span class="n">SetIn</span><span class="p">,</span> <span class="n">SetOut</span> <span class="o">=</span> <span class="n">dt</span><span class="o">.</span><span class="n">create_dataset_beam</span><span class="p">(</span><span class="n">modulation</span><span class="p">,</span> <span class="n">Mmod</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">phi</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">desired</span><span class="p">,</span> <span class="n">lenData</span><span class="p">,</span> <span class="n">SINRdB</span><span class="p">,</span> <span class="n">SNRdBs</span><span class="p">,</span> <span class="n">SNRdBi</span><span class="p">)</span>
+
+
+            <span class="k">return</span> <span class="n">SetIn</span><span class="p">,</span> <span class="n">SetOut</span>
+
+    <span class="c1">###############################################################################################################</span>
+    <span class="c1">###############################################################################################################</span>
+
+
+    <span class="c1"># Initialize input_data and output_data using the setData function</span>
+    <span class="n">input_data</span><span class="p">,</span> <span class="n">output_data</span> <span class="o">=</span> <span class="n">setData</span><span class="p">()</span>
+
+    <span class="c1"># Create an instance of the FCRBF Neural Network</span>
+    <span class="n">nn</span> <span class="o">=</span> <span class="n">mynn</span><span class="o">.</span><span class="n">FCRBFNN</span><span class="p">(</span><span class="n">gpu_enable</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+    <span class="c1"># Create an instance of the FCRBF Neural Network</span>
+    <span class="n">nn</span><span class="o">.</span><span class="n">addLayer</span><span class="p">(</span><span class="n">ishape</span><span class="o">=</span><span class="n">input_data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">neurons</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">oshape</span><span class="o">=</span><span class="n">output_data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">gamma_rate</span><span class="o">=</span><span class="mf">1e-3</span><span class="p">,</span> <span class="n">sigma_rate</span><span class="o">=</span><span class="mf">1e-3</span><span class="p">)</span>
+
+
+    <span class="c1"># Train the neural network using fit method</span>
+    <span class="n">nn</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">input_data</span><span class="p">,</span> <span class="n">output_data</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+
+    <span class="c1"># Make predictions using the trained model</span>
+    <span class="n">y_pred</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">input_data</span><span class="p">)</span>
+
+    <span class="c1"># Calculate and print accuracy</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Accuracy: </span><span class="si">{:.2f}</span><span class="s1">%&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">accuracy</span><span class="p">(</span><span class="n">output_data</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="example_cvrbf_1.html" class="btn btn-neutral float-left" title="Code Example CVRBFNN" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="example_ptrbf_1.html" class="btn btn-neutral float-right" title="Code Example PTRBFNN" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Ariadne A. Cruz, Kayol S. Mayer, Dalton S. Arantes.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
